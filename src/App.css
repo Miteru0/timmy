@@ -1,0 +1,7 @@
+body {
+  background-color: darkblue;
+}
+
+canvas {
+  height: 100vh !important;
+}
