@@ -1,7 +1,89 @@
+/* General Styles */
 body {
   background-color: darkblue;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: white;
 }
 
+/* Style for the canvas (3D scene) */
 canvas {
   height: 100vh !important;
+  display: block;
+}
+
+/* Controls container (input and button) */
+.controls {
+  position: fixed;
+  bottom: 50px; /* Space from the bottom of the screen */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add some space between the input and button */
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Transparent background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Input field styles */
+.controls input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  font-size: 16px;
+  outline: none;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2); /* Slight transparency for the input */
+}
+
+/* Button styles */
+.controls button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #ff9900; /* A bright color to stand out */
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.controls button:hover {
+  background-color: #cc7a00; /* Darker shade when hovered */
+}
+
+/* AI response display */
+.ai-response {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  text-align: center;
+  max-width: 80%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtitle styles */
+.subtitles {
+  position: fixed;
+  bottom: 80px; /* Space above the controls */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  max-width: 90%;
+  text-align: center;
 }
