@@ -32,7 +32,7 @@ const playTTS = (text, setAnimation, setSubtitles) => {
 
 // Function to make an API request to your backend
 const fetchAIResponse = async (prompt, token) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timmy/ask`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/timmy/ask`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
