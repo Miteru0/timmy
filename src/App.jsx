@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import jwtDecode from 'jwt-decode'; // Import JWT decode
+import { jwtDecode } from 'jwt-decode'; // Use named import
 import { OrbitControls, Environment } from '@react-three/drei';
 import Model from '../public/Model';
 import { useNavigate } from 'react-router-dom'; // For routing
@@ -66,7 +66,7 @@ const App = () => {
       navigate('/login'); // Redirect if no token
     } else {
       try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(token); // Corrected import usage
         const currentTime = Date.now() / 1000; // Convert to seconds
   
         if (decoded.exp < currentTime) {
@@ -83,6 +83,7 @@ const App = () => {
       }
     }
   }, [navigate]);
+  
 
   const handleTextChange = (e) => {
     setText(e.target.value);
