@@ -6,19 +6,15 @@ import { useNavigate } from 'react-router-dom'; // For routing
 import './App.css';
 
 // Function to handle text-to-speech using Web Speech API
-const playTTS = (text, setAnimation, setSubtitles) => {
+const playTTS = (text, setAnimation, emotion, setSubtitles) => {
   if (!text.trim()) return; // Prevent empty speech
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.pitch = 1;
   utterance.rate = 1;
 
-  // Random animation selection
-  const animations = ['talk1', 'talk2'];
-  const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-
   utterance.onstart = () => {
-    setAnimation(randomAnimation);
+    setAnimation(emotion); // Set animation based on emotion
     setSubtitles(text); // Display the subtitles when TTS starts
   };
 
@@ -38,9 +34,7 @@ const fetchAIResponse = async (prompt, token) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      prompt: prompt,
-    }),
+    body: JSON.stringify({ prompt }),
   });
 
   const responseText = await response.text();
@@ -48,10 +42,10 @@ const fetchAIResponse = async (prompt, token) => {
 
   try {
     const data = JSON.parse(responseText);
-    return data?.response || '';
+    return data || {}; // Return full object with emotion and text
   } catch (error) {
     console.error('Error parsing JSON:', error);
-    return '';
+    return {};
   }
 };
 
@@ -81,9 +75,9 @@ const App = () => {
   const handleSpeakClick = async () => {
     if (text && authToken) {
       const response = await fetchAIResponse(text, authToken);
-      setAiResponse(response);
-      if (response) {
-        playTTS(response, setSelectedAnimation, setSubtitles);
+      if (response?.text && response?.emotion) {
+        setAiResponse(response.text);
+        playTTS(response.text, setSelectedAnimation, response.emotion, setSubtitles);
       }
     }
   };
