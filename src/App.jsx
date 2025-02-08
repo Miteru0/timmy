@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
+import jwtDecode from 'jwt-decode'; // Import JWT decode
 import { OrbitControls, Environment } from '@react-three/drei';
 import Model from '../public/Model';
 import { useNavigate } from 'react-router-dom'; // For routing
@@ -59,12 +60,27 @@ const App = () => {
   const navigate = useNavigate(); // Use navigate instead of history
 
   useEffect(() => {
-    // Check if token exists in localStorage
     const token = localStorage.getItem('authToken');
+  
     if (!token) {
-      navigate('/login'); // Redirect to login if no token
+      navigate('/login'); // Redirect if no token
     } else {
-      setAuthToken(token);
+      try {
+        const decoded = jwtDecode(token);
+        const currentTime = Date.now() / 1000; // Convert to seconds
+  
+        if (decoded.exp < currentTime) {
+          console.warn('Token expired, redirecting to login...');
+          localStorage.removeItem('authToken'); // Remove expired token
+          navigate('/login'); // Redirect to login
+        } else {
+          setAuthToken(token);
+        }
+      } catch (error) {
+        console.error('Invalid token format, redirecting to login:', error);
+        localStorage.removeItem('authToken'); // Remove invalid token
+        navigate('/login'); // Redirect to login
+      }
     }
   }, [navigate]);
 
